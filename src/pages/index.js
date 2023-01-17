@@ -37,7 +37,7 @@ const Home = () => {
 
       const { output } = await response.json();
 
-      addMessage({ author: character, message: output.text });
+      addMessage({ author: character, message: output });
       setIsLoading(false);
     },
     [character, messages]
@@ -81,7 +81,7 @@ const Home = () => {
         <Input onSubmit={post} isLoading={isLoading} />
 
         {messages.map(({ author, message }) => (
-          <Message author={author} message={message} />
+            <Message key={message} author={author} message={message} />
         ))}
       </div>
     </div>

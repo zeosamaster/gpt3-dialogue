@@ -3,10 +3,13 @@ import React from "react";
 export function Input({ onSubmit, isLoading }) {
   const [userInput, setUserInput] = React.useState("");
 
-  const onFormSubmit = React.useCallback((message) => {
-    onSubmit(message);
-    setUserInput("");
-  }, []);
+  const onFormSubmit = React.useCallback(
+    (message) => {
+      onSubmit(message);
+      setUserInput("");
+    },
+    [onSubmit]
+  );
 
   React.useEffect(() => {
     function keyDown(e) {

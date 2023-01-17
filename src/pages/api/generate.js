@@ -6,19 +6,26 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const initialPrompt = (character) =>
-  `This is a dialogue with ${character}. Always answer in portuguese from Portugal.`;
+const getCharacterPrompt = (character) =>
+  `This is a dialogue with ${character}.`;
+
+const getLanguagePrompt = (language) => `Always answer in ${language}.`;
+
+const getMessagePrompt = ({ author, message }) => `${author}: ${message}.`;
 
 const generateAction = async (req, res) => {
-  const { character, messages } = req.body;
+  const { character, language, messages } = req.body;
+
+  const characterPrompt = getCharacterPrompt(character);
+  const languagePrompt = language ? getLanguagePrompt(language) : undefined;
+  const messagePrompts = messages.map(getMessagePrompt);
 
   const allMessages = [
-    initialPrompt(character),
-    messages.map(({ author, message }) => `${author}: ${message}.`),
+    characterPrompt,
+    ...(languagePrompt ? [languagePrompt] : []),
+    ...messagePrompts,
   ];
-  const prompt = allMessages.join("\n");
-
-  console.log("Generating with:\n", prompt);
+  const prompt = allMessages.join("\n\n");
 
   const baseCompletion = await openai.createCompletion({
     model: "text-davinci-003",
@@ -27,11 +34,9 @@ const generateAction = async (req, res) => {
     max_tokens: 500,
   });
 
-  const basePromptOutput = baseCompletion.data.choices.pop();
+  const { text } = baseCompletion.data.choices.pop();
 
-  console.log("Generated", basePromptOutput);
-
-  res.status(200).json({ output: basePromptOutput });
+  res.status(200).json({ output: text });
 };
 
 export default generateAction;
