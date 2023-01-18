@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.row {
+  width: 100%;
+}
+
+.message {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1em;
+  margin: 0.5em;
+  width: fit-content;
+  max-width: calc(100% * 2 / 3);
+}
+
+.message.right {
+  margin-left: auto;
+}

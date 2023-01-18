@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap");
+
+.prompt-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.prompt-input {
+  flex: 1 0 auto;
+  font-family: "Manrope", sans-serif;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1em;
+  overflow: hidden;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  line-height: 1.6em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.prompt-input:focus,
+.prompt-submit:focus {
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+.prompt-submit {
+  color: rgb(255, 255, 255);
+  background-color: rgb(100, 100, 100);
+  border-radius: 10px;
+  flex: 0 0 auto;
+  cursor: pointer;
+  font-size: 24px;
+  width: 42px;
+  outline: none;
+}
+
+.prompt-submit img {
+  filter: invert(80%);
+}
+
+/* Loading ring animation */
+.loader {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 2px solid #fff;
+  border-right: 2px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

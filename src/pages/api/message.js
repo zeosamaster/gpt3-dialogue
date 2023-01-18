@@ -1,27 +1,18 @@
-import { Configuration, OpenAIApi } from "openai";
+import openai from "../../utils/openai";
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
-
-const getCharacterPrompt = (character) =>
-  `This is a dialogue with ${character}.`;
-
+const getContactPrompt = (contact) => `Answer as if you were ${contact}.`;
 const getLanguagePrompt = (language) => `Always answer in ${language}.`;
-
 const getMessagePrompt = ({ author, message }) => `${author}: ${message}.`;
 
-const generateAction = async (req, res) => {
-  const { character, language, messages } = req.body;
+const generateMessage = async (req, res) => {
+  const { contact, language, messages } = req.body;
 
-  const characterPrompt = getCharacterPrompt(character);
+  const contactPrompt = getContactPrompt(contact);
   const languagePrompt = language ? getLanguagePrompt(language) : undefined;
   const messagePrompts = messages.map(getMessagePrompt);
 
   const allMessages = [
-    characterPrompt,
+    contactPrompt,
     ...(languagePrompt ? [languagePrompt] : []),
     ...messagePrompts,
   ];
@@ -39,4 +30,4 @@ const generateAction = async (req, res) => {
   res.status(200).json({ output: text });
 };
 
-export default generateAction;
+export default generateMessage;
